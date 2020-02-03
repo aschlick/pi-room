@@ -1,0 +1,14 @@
+{
+  "name": "pi-room",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@abandonware/noble": "^1.9.2-5"
+  },
+  "type": "module"
+}
