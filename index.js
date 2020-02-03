@@ -1,13 +1,16 @@
-import noble from '@abandonware/noble';
+import Proximity from './src/proximity';
+import Broadcast from './src/broadcast';
 
-noble.startScanning([], true);
+let cast = new Broadcast();
 
-noble.on('discover', function(peripheral) { 
-  var macAddress = peripheral.uuid;
-  var rss = peripheral.rssi;
-  var localName = peripheral.advertisement.localName; 
-
-  if(macAddress == '806fb06c8353'){
-    console.log('found device: ', macAddress, ' ', localName, ' ', rss);   
-  }
+cast.setReciever((advert) => {
+  console.log(`recieved ${advert} from external source`);
 });
+
+let beacons = ['806fb06c8353']
+let onDiscovered = (uuid, advert) => {
+  console.log(`uuid ${found} with local name ${advert.localName}`);
+  cast.send(advert);
+}
+
+let prox = new Proximity(beacons, onDiscovered);
