@@ -1,5 +1,21 @@
 import dgram from 'dgram';
 
+class Message {
+  constructor(type, payload) {
+    if(!Message.types.values.contains(type)){
+      throw new Error('Message must be of predefined type');
+    }
+
+    this.type = type;
+    this.payload = payload;
+  }
+}
+
+Message.types = {
+  ProximityData,
+  ControllerData
+}
+
 class Broadcast {
   constructor(port = 90376) {
     this.server = dgram.createSocket('udp4');
@@ -20,4 +36,5 @@ class Broadcast {
   }
 }
 
-export default Broadcast
+export default Broadcast;
+export { Message };
