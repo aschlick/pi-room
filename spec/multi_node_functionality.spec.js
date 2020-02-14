@@ -1,12 +1,12 @@
-import Brain from "src/brain";
+import TestEnvironment from "./helpers/test_environment";
 import test from 'ava';
-import 'spec/helpers/stub_dependencies';
 
-const runner = new Brain();
+test("first node up should be controller", t => {
+  const environment = new TestEnvironment()
 
-test('when no controller, it assigns itself', t => {
-  runner.start();
-  setTimeout(() => {
-    t.true(runner.isController);
-  }, 500);
-});
+  environment.addNode()
+  environment.addNode()
+  environment.addNode()
+
+  t.true(environment.nodes[0].isController)
+})

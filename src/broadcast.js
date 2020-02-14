@@ -12,8 +12,8 @@ class Message {
 }
 
 Message.types = {
-  ProximityData,
-  ControllerData
+  ProximityData: "ProximityData",
+  ControllerData: "ControllerData"
 }
 
 class Broadcast {

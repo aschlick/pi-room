@@ -1,7 +1,8 @@
-import noble from '@abandonware/noble';
-
 class Proximity {
-  constructor(beaconAddresses, onBeaconDiscovered) {
+  noble;
+
+  constructor(noble_instance, beaconAddresses, onBeaconDiscovered) {
+    noble = noble_instance;
     this.beaconAddresses = beaconAddresses;
     this.onBeaconDiscovered = onBeaconDiscovered;
 

@@ -1,5 +1,5 @@
-import Proximity from 'src/proximity';
-import Broadcast from 'src/broadcast';
+import Proximity from './proximity';
+import Broadcast from './broadcast';
 
 // need to figure out how to update this later.
 const beacons = ['806fb06c8353']
@@ -9,9 +9,17 @@ class Brain {
   broadcast = new Broadcast();
   proximity;
 
+  constructor(noble) {
+    this.noble = noble;
+  }
+
   start() {
     this.broadcast.setReciever(this.onMessageFromAnother);
-    proximity = new Proximity(beacons, this.onBeaconDiscovered)
+    proximity = new Proximity(
+      this.noble,
+      beacons,
+      this.onBeaconDiscovered
+    )
   }
 
   onMessageFromAnother(advert) {

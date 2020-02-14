@@ -1,19 +1,36 @@
 import sinon from 'sinon';
 import dgram from 'dgram';
-import noble from '@abandonware/noble';
 import Brain from '../../src/brain';
 
+var dgramStub = sinon.stub(dgram);
+var nobleStub = {
+  startScanning: sinon.spy(),
+  on: sinon.spy(),
+
+};
 
 class TestEnvironment {
-  dgramStub = sinon.stub(dgram);
-  nobleStub = sinon.stub(noble);
-  
-  broadcastEvents = [];
+  broadcasts = [];
   nodes = [];
 
+  constructor() {
+    var self = this;
+    dgramStub.createSocket.returns({
+      send: (msg) => {
+        self.broadcasts.forEach(b => b(msg))
+      },
+      on: (type, fn) => self.broadcasts.push(fn),
+      bind: sinon.spy()
+    })
+  }
+
   addNode(){
-    let node = new Brain();
+    let node = new Brain(nobleStub);
     this.nodes.push(node);
+  }
+
+  mimicBroadcast() {
+
   }
 }
 
