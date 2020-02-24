@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.mjs",
   "scripts": {
-    "test": "ava"
+    "test": "npx ava",
+    "test:watch": "npx ava --watch"
   },
   "author": "",
   "license": "ISC",

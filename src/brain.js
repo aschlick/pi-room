@@ -1,25 +1,27 @@
 import Proximity from './proximity';
-import Broadcast from './broadcast';
+import { Broadcast, Message } from './broadcast';
+import ControllerInfo from './controllerInfo';
 
 // need to figure out how to update this later.
 const beacons = ['806fb06c8353']
 
 class Brain {
-  isController = false;
   broadcast = new Broadcast();
   proximity;
+  noble;
 
   constructor(noble) {
     this.noble = noble;
-  }
-
-  start() {
-    this.broadcast.setReciever(this.onMessageFromAnother);
-    proximity = new Proximity(
+    this.controllerInfo = new ControllerInfo(this.broadcast);
+    this.proximity = new Proximity(
       this.noble,
       beacons,
       this.onBeaconDiscovered
     )
+  }
+
+  get isController() {
+    return this.controllerInfo.isController
   }
 
   onMessageFromAnother(advert) {

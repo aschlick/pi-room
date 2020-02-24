@@ -5,28 +5,38 @@ import Brain from '../../src/brain';
 var dgramStub = sinon.stub(dgram);
 var nobleStub = {
   startScanning: sinon.spy(),
-  on: sinon.spy(),
-
+  on: sinon.spy()
 };
 
 class TestEnvironment {
-  broadcasts = [];
-  nodes = [];
-
-  constructor() {
-    var self = this;
-    dgramStub.createSocket.returns({
-      send: (msg) => {
-        self.broadcasts.forEach(b => b(msg))
-      },
-      on: (type, fn) => self.broadcasts.push(fn),
-      bind: sinon.spy()
-    })
-  }
+  count = 0;
+  broadcasts = {};
+  nodes = {};
 
   addNode(){
+    var self = this;
+    var cast = {
+      id: this.count,
+      send: function(msg) {
+        console.info(`Node ${this.id} sent ${msg}`);
+        Object.keys(self.broadcasts)
+          .filter(k => k != this.id)
+          .forEach(k => {
+            console.info(`sending ${msg} to ${k}`);
+            self.broadcasts[k](msg);
+          })
+      },
+      on: function(type, fn){
+        self.broadcasts[this.id] = fn;
+      },
+      bind: sinon.spy()
+    }
+
+    dgramStub.createSocket.returns(cast);
     let node = new Brain(nobleStub);
-    this.nodes.push(node);
+    this.nodes[this.count] = node;
+    console.info(`Added node ${this.count}`);
+    this.count = this.count + 1;
   }
 
   mimicBroadcast() {

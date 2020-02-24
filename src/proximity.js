@@ -2,15 +2,15 @@ class Proximity {
   noble;
 
   constructor(noble_instance, beaconAddresses, onBeaconDiscovered) {
-    noble = noble_instance;
+    this.noble = noble_instance;
     this.beaconAddresses = beaconAddresses;
     this.onBeaconDiscovered = onBeaconDiscovered;
 
-    noble.on('discover', this.discovered);
+    this.noble.on('discover', this.discovered);
   }
 
   start(){
-    noble.startScanning([], true);
+    this.noble.startScanning([], true);
   }
 
   discovered(peripheral) {

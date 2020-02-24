@@ -2,13 +2,18 @@ import dgram from 'dgram';
 
 class Message {
   constructor(type, payload) {
-    if(!Message.types.values.contains(type)){
-      throw new Error('Message must be of predefined type');
+    if(!Object.values(Message.types).includes(type)){
+      throw new Error(`Message must be of predefined type. Recieved ${type}`);
     }
 
     this.type = type;
     this.payload = payload;
   }
+}
+
+Message.fromPayload = function(payload) {
+  var obj = JSON.parse(payload);
+  return new Message(obj.type, obj.payload);
 }
 
 Message.types = {
@@ -28,13 +33,15 @@ class Broadcast {
     this.server.send(str);
   }
 
-  setReciever(fn) {
+  setReciever(type, fn) {
     this.server.on('message', (msg, rinfo) => {
-      let obj = JSON.parse(msg);
-      fn(obj);
+      let message = Message.fromPayload(msg);
+      if(message.type === type){
+        fn(message.payload)
+      }
     })
   }
 }
 
 export default Broadcast;
-export { Message };
+export { Message, Broadcast };
