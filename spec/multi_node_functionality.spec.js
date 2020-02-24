@@ -17,9 +17,15 @@ test("first node up should be controller", t => {
 });
 
 test('only one node is a controller', t => {
-  var cnt = Object.values(environment.nodes)
+  var cnt = environment.getNodes()
     .filter(n => n.isController === true)
     .length;
 
   t.is(cnt, 1);
+});
+
+test('non-controllers know the ip of the controller', t => {
+  environment.getNodes()
+    .filter(n => n.isController === false)
+    .forEach(n => t.is(n.controllerInfo.controllerIp, '192.168.42.0'))
 });

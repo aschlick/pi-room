@@ -33,7 +33,7 @@ class TestEnvironment {
     }
 
     dgramStub.createSocket.returns(cast);
-    let node = new Brain(nobleStub);
+    let node = new Brain(nobleStub, `192.168.42.${this.count}`);
     this.nodes[this.count] = node;
     console.info(`Added node ${this.count}`);
     this.count = this.count + 1;
@@ -41,6 +41,10 @@ class TestEnvironment {
 
   mimicBroadcast() {
 
+  }
+
+  getNodes() {
+    return Object.values(this.nodes);
   }
 }
 

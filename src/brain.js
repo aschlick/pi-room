@@ -10,9 +10,9 @@ class Brain {
   proximity;
   noble;
 
-  constructor(noble) {
+  constructor(noble, ip) {
     this.noble = noble;
-    this.controllerInfo = new ControllerInfo(this.broadcast);
+    this.controllerInfo = new ControllerInfo(this.broadcast, ip);
     this.proximity = new Proximity(
       this.noble,
       beacons,

@@ -6,8 +6,10 @@ class ControllerInfo {
   statusId = 0;
   controllerIp;
   broadcast;
+  selfIp;
 
-  constructor(broadcast) {
+  constructor(broadcast, ip) {
+    this.selfIp = ip;
     this.broadcast = broadcast;
     this.broadcast.setReciever(messageType, this.receiveMessage.bind(this))
     this.queryForController();
@@ -32,11 +34,10 @@ class ControllerInfo {
   declareSelfController() {
     if(!this.controllerIp && !this.isController){
       this.statusId = ControllerInfo.statuses.indexOf("isController");
-
       this.broadcast.send(new Message(
         messageType,
         {
-          controllerIp: 'thisControllersIp'
+          controllerIp: this.selfIp
         }
       ));
     }
