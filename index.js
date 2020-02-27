@@ -1,5 +1,5 @@
 import Brain from './src/brain';
 import noble from '@abandonware/noble';
+import ip from 'ip';
 
-const runner = new Brain(noble);
-runner.start();
+new Brain(noble, ip.address());
