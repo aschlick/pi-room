@@ -22,15 +22,16 @@ Message.types = {
 };
 
 class Broadcast {
-    constructor(port = 90376) {
+    constructor(port = 57693) {
+        this.port = port;
         this.server = dgram.createSocket('udp4');
         this.server.bind(port);
     }
 
     send(payload){
         let str = JSON.stringify(payload);
-
-        this.server.send(str);
+        let msg = Buffer.from(str);
+        this.server.send(msg, 0, msg.length, this.port);
     }
 
     setReciever(type, fn) {
