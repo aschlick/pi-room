@@ -1,3 +1,5 @@
 import test from 'ava';
 
-test('')
+test('starts librespot when getting controller', t => {
+
+})

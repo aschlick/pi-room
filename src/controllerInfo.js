@@ -8,11 +8,13 @@ class ControllerInfo {
   broadcast;
   selfIp;
 
-  constructor(broadcast, ip) {
+  constructor(broadcast, ip, becomingControllerFn, losingControllerFn) {
     this.selfIp = ip;
     this.broadcast = broadcast;
     this.broadcast.setReciever(messageType, this.receiveMessage.bind(this))
     this.queryForController();
+    this.onBecomingController = becomingControllerFn;
+    this.onLosingController = losingControllerFn;
   }
 
   get isController(){
@@ -40,6 +42,7 @@ class ControllerInfo {
           controllerIp: this.selfIp
         }
       ));
+      this.onBecomingController();
     }
   }
 
