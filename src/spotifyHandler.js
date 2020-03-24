@@ -5,16 +5,12 @@ class SpotifyHandler {
     constructor(path, name = 'PiNetwork'){
         this.name = name;
         this.path = path;
-
-        this.child = new (Forever.Monitor)(['librespot'], {
-            cwd: this.path,
-            command: 'librespot',
-            args: ['--name', this.name, '-v']
-        });
+        let cmd = `${path}/librespot --name "${name}" -v`
+        this.child = new (Forever.Monitor)(['librespot']);
 
         this.child.on("error", error => {
-            console.error("There was an error starting librespot", error);
-        })
+            console.log("There was an error starting librespot", error);
+        });
     }
   
     start() {
