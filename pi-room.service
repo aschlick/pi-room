@@ -1,0 +1,12 @@
+[Unit]
+Description=Pi Room background machine
+Documentation=https://github.com/aschlick/pi-room
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/npm --prefix /home/pi/source/pi-room start
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
