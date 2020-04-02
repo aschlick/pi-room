@@ -6,7 +6,7 @@ class SpotifyHandler {
         this.name = name;
         this.path = path;
         let cmd = `${path}/librespot --name "${name}" -v`
-        this.child = new (Forever.Monitor)(['librespot']);
+        this.child = new (Forever.Monitor)([cmd]);
 
         this.child.on("error", error => {
             console.log("There was an error starting librespot", error);
