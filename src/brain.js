@@ -26,7 +26,7 @@ class Brain {
     );
 
     this.plugins = [
-      new SpotifyHandler('~/code/librespot/target/release')
+      new SpotifyHandler('/home/pi/code/librespot/target/release')
     ];
   }
 
