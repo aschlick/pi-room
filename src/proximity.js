@@ -3,10 +3,10 @@ class Proximity {
 
   constructor(noble_instance, beaconAddresses, onBeaconDiscovered) {
     this.noble = noble_instance;
-    this.beaconAddresses = beaconAddresses;
+    this.beaconAddresses = beaconAddresses || [];
     this.onBeaconDiscovered = onBeaconDiscovered;
-
-    this.noble.on('discover', this.discovered);
+    var self = this;
+    this.noble.on('discover', this.discovered.bind(self));
   }
 
   start(){
@@ -15,13 +15,14 @@ class Proximity {
 
   discovered(peripheral) {
     let {
+      address,
       uuid,
       rssi,
       advertisement
     } = peripheral;
 
-    if(this.beaconAddresses.contains(uuid)) {
-      this.onBeaconDiscovered(uuid, advertisement);
+    if(this.beaconAddresses.indexOf(uuid) > -1) {
+      this.onBeaconDiscovered(uuid, advertisement, rssi);
     }
   }
 }
