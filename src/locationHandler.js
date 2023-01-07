@@ -22,14 +22,14 @@ class LocationHandler{
     var oldDiff = oldRange - RANGE_CUTOFF;
     var newDiff = newRange - RANGE_CUTOFF;
     var ret = 0;
-    if(oldDiff > 0 && newDiff < 0) {
+    if((Number.isNaN(oldDiff) ||oldDiff > 0) && newDiff < 0) {
       ret = INRANGE;
-    } else if(oldDiff < 0 && newDiff > 0){
+    } else if((Number.isNaN(oldDiff) || oldDiff < 0) && newDiff > 0){
       ret = OUTRANGE;
     }
 
     if(ret != 0){
-      console.log(`${uuid} changed to ${ret}`);
+      console.log(`${(new Date()).toUTCString()}: ${uuid} changed to ${ret}`);
     }
   }
 }

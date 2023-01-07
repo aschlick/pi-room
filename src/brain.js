@@ -46,8 +46,8 @@ class Brain {
 
   onBeaconDiscovered(uuid, advert, rssi) {
     if(!this.ranges[uuid]) this.ranges[uuid] = new Range();
-    this.ranges[uuid].add(rssi)
-    this.locationHandler.setRange(uuid, this.ranges[uuid].average())
+    this.ranges[uuid].add(rssi);
+    this.locationHandler.setRange(uuid, this.ranges[uuid].average());
   }
 
   onBecomingController() {

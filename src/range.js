@@ -1,4 +1,4 @@
-const RANGE_LENGTH = 3;
+const RANGE_LENGTH = 10;
 
 class Range {
   values = [];
